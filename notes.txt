@@ -1,0 +1,352 @@
+npm init
+npm install -save express mongoose
+npm install swagger-jsdoc@6.0.0 swagger-ui-express
+
+db.data.insert([
+    {
+        name:"John Doe",
+        healthnum:"123456789",
+        age:"23",
+        contact:"987654321",
+        email:"johndoe@mail.com",
+        county:"Guarda",
+        s1:"false",
+        s2:"false",
+        s3:"false",
+        s4:"false",
+        s5:"false",
+        s6:"true",
+        s7:"true",
+        s8:"false",
+        s9:"false",
+        s10:"false",
+        s11:"true",
+        s12:"true",
+        s13:"false",
+        q1:"false",
+        q2:"false",
+        q3:"false",
+    }
+]);
+db.data.insert([
+    {
+        name:"John Doe2",
+        healthnum:"123456789",
+        age:"23",
+        contact:"987654321",
+        email:"johndoe2@mail.com",
+        county:"Algarve",
+        s1:"false",
+        s2:"false",
+        s3:"false",
+        s4:"false",
+        s5:"false",
+        s6:"true",
+        s7:"false",
+        s8:"false",
+        s9:"false",
+        s10:"false",
+        s11:"false",
+        s12:"false",
+        s13:"false",
+        q1:"false",
+        q2:"false",
+        q3:"false",
+    }
+]);
+
+db.data.insert([
+    {
+        name:"John Doe 3",
+        healthnum:"123456789",
+        age:"23",
+        contact:"987654321",
+        email:"johndoe3@mail.com",
+        county:"Guarda",
+        s1:"false",
+        s2:"false",
+        s3:"false",
+        s4:"false",
+        s5:"false",
+        s6:"true",
+        s7:"true",
+        s8:"false",
+        s9:"false",
+        s10:"false",
+        s11:"true",
+        s12:"true",
+        s13:"false",
+        q1:"false",
+        q2:"false",
+        q3:"false",
+    }
+]);
+
+db.getCollection('data').aggregate([
+    {
+        $group: { 
+            _id : 1,
+            flagOne: {$sum: {$cond: [{$eq:["$county", "Guarda"]}, 1, 0]}},
+        }
+    },
+    {$project: {_id:0}}
+])
+
+
+
+db.getCollection('data').aggregate([
+    {
+        $group: { 
+            _id : 1,
+            s6: {$sum: {$cond: [{$eq:["$s6", "true"]}, 1, 0]}},
+        }
+    },
+    {$project: {_id:0}}
+])
+
+
+
+db.getCollection('data').aggregate([
+    {
+        $group: { 
+            _id : 1,
+            s11: {$sum: {$cond: ["$s11", 1, 0]}},
+        }
+    },
+    {$project: {_id:0}}
+]);
+
+db.data.aggregate([
+    { "$group": {
+        "_id": "1",
+        "count": { "$sum": 1 }
+    }}
+])
+
+db.data.aggregate([
+    { 
+        $group: {
+            "_id": "1",
+            "count": { "$sum": 1 },
+            s6: { $sum: { $cond: [ { $eq: [ "s6", false ] }, 1, 0 ] } }
+        }
+    }
+])
+
+
+
+
+mongodb+srv://atlasAdmin:<password>@cluster0.dyilf.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
+
+
+
+{
+    "_id": {
+        "$oid": "6091339bb67743325910f3a2"
+    },
+    "name": "John Doe",
+    "healthnum": {
+        "$numberInt": "123456789"
+    },
+    "age": {
+        "$numberInt": "23"
+    },
+    "contact": "987654321",
+    "email": "johndoe@mail.com",
+    "county": "Guarda",
+    "s1": false,
+    "s2": false,
+    "s3": false,
+    "s4": false,
+    "s5": false,
+    "s6": true,
+    "s7": true,
+    "s8": false,
+    "s9": false,
+    "s10": false,
+    "s11": true,
+    "s12": true,
+    "s13": false,
+    "q1": false,
+    "q2": false,
+    "q3": false
+}
+
+
+
+
+db.getCollection('data').find([
+    {
+        s6: {$sum: {$cond: [{$eq:["$s6", "true"]}, 1, 0]}}
+    }
+])
+
+
+
+
+
+
+
+
+// CustomChronologicalCount
+router.route('/customchronologicalreport/:byear/:bmonth/:bday/:bhour/:bminute/:eyear/:emonth/:eday/:ehour/:eminute').get(Controller.customchronologicalreport);
+
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     CustomChronologicalCount:
+ *       type: object
+ *       required:
+ *         - byear
+ *         - bmonth
+ *         - bday
+ *         - eyear
+ *         - emonth
+ *         - eday
+ *       properties:
+ *         byear:
+ *           type: number
+ *           description: Initial Year range.
+ *         bmonth:
+ *           type: number
+ *           description: Initial Month range.
+ *         bday:
+ *           type: number
+ *           description: Initial Day range.
+ *         bhour:
+ *           type: number
+ *           description: Initial Hour range.
+ *         bminute:
+ *           type: number
+ *           description: Initial Minute range.
+ *         eyear:
+ *           type: number
+ *           description: Final Year range.
+ *         emonth:
+ *           type: number
+ *           description: Final Month range.
+ *         eday:
+ *           type: number
+ *           description: Final Day range.
+ *         ehour:
+ *           type: number
+ *           description: Final Hour range.
+ *         eminute:
+ *           type: number
+ *           description: Final Minute range.
+ *         example:
+ * 
+ */
+
+/**
+  * @swagger
+  * /covidreportapi/customchronologicalreport/{byear}/{bmonth}/{bday}/{bhour}/{bminute}/{eyear}/{emonth}/{eday}/{ehour}/{eminute}:
+  *   get:
+  *     summary: Retrieve the total number of Reports related to a especific age range.
+  *     tags: [Reports]
+  *     parameters:
+  *       - in: path
+  *         name: byear
+  *         schema:
+  *           type: number
+  *         required: true
+  *         description: The initial Year range. <code>Int</code>
+  *       - in: path
+  *         name: bmonth
+  *         schema:
+  *           type: number
+  *         required: true
+  *         description: The initial Month range. <code>01 - 12</code>
+  *       - in: path
+  *         name: bday
+  *         schema:
+  *           type: number
+  *         required: true
+  *         description: The initial Day range. <code>01 - 31</code>
+  *       - in: path
+  *         name: bhour
+  *         schema:
+  *           type: number
+  *         required: true
+  *         description: The initial Hour range. <code>00 - 23</code>
+  *       - in: path
+  *         name: bminute
+  *         schema:
+  *           type: number
+  *         required: true
+  *         description: The initial Minute range. <code>00 - 59</code>
+  *       - in: path
+  *         name: eyear
+  *         schema:
+  *           type: number
+  *         required: true
+  *         description: The final Year range. <code>Int</code>
+  *       - in: path
+  *         name: emonth
+  *         schema:
+  *           type: number
+  *         required: true
+  *         description: The final Month range. <code>01 - 12</code>
+  *       - in: path
+  *         name: eday
+  *         schema:
+  *           type: number
+  *         required: true
+  *         description: The final Day range. <code>01 - 31</code>
+  *       - in: path
+  *         name: ehour
+  *         schema:
+  *           type: number
+  *         required: true
+  *         description: The final Hour range. <code>00 - 23</code>
+  *       - in: path
+  *         name: eminute
+  *         schema:
+  *           type: number
+  *         required: true
+  *         description: The final Minute range. <code>00 - 59</code>
+  *     responses:
+  *       200:
+  *         description: test
+  *         content:
+  *           application/json:
+  *             schema:
+  *             type: object
+  *             items:
+  *               $ref: '#/components/schemas/CustomChronologicalCount'
+  *       404:
+  *         description: nope
+  *           
+  */
+
+  getSymptomCount(symptom){
+        var self = this
+        return new Promise((resolve,reject)=>{         
+
+            let sym = symptom.substring(0, 2);
+            //let name = symptom.substring(4)
+
+            var query = [{
+                $group: { 
+                    _id : 1,
+                    //symptom: {$sum: {$cond: [{$eq:[`$s${num}`, "true"]}, 1, 0]}},
+                    //symptom: {$sum: {$cond: [{$eq:["$county", "Guarda"]}, 1, 0]}},
+                    total: {$sum: {$cond: [{$eq:[`$s${sym}`, true]}, 1, 0]}}
+                },
+            },{$project: {_id:0}}];        
+            
+            self.dbo.collection("data").aggregate(query).toArray(function(err, result) {
+                if (err) reject(err);
+                //console.log("result: ", result);
+                resolve(result);
+            });
+        })
+    }
+
+
+    npm install node-json2html
+
+    npm install express-graphql graphql --save
+
+    npm install nodemon -D
