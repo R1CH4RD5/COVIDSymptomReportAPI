@@ -293,21 +293,17 @@ exports.symptomratio = function (req, res) {
 
                 switch (result.length) {
                     case 1:
-                        // so ha quem tenha ou so quem n tenha
                         res.json({ symptom: symptom, result: [{had_symptom: result[0]._id.result, count: result[0].count,percentage: result[0].percentage}]});
                         break;
                     case 2:
-                        // ha ambos
                         res.json({ symptom: symptom, result: [{had_symptom: result[1]._id.result, count: result[1].count,percentage: result[1].percentage},
                             {had_symptom: result[0]._id.result, count: result[0].count,percentage: result[0].percentage}]});
                         break;
                 
                     default:
-                        // n ha casos
                         res.json({symptom: symptom, result: "no data"})
                         break;
                 }
-
                 
                 newconnection.close();
                 
@@ -517,18 +513,24 @@ exports.overview = function (req, res) {
                     {"<>": "tr","html": [
                         {"<>": "td","html": "${_id}"}, 
                         {"<>": "td","html": "${count}"},
-                        //{"<>": "td","html": "${count}", 'obj':function(){return(this.q3s)}}
-                        //{"<>": "td","html": "${count}", 'obj':function(){return(this.q3s)}} 
-                    ]
-                }];
+                        ]
+                    },
+                    {"<>": "tr","html": [
+                            {"<>": "td","html": "${q3}", 'obj':function(){return(this.q3s)}},
+                        ]
+                    },
+                    {"<>": "tr","html": [
+                        {"<>": "td","html": "${count}", 'obj':function(){return(this.q3s)}} 
+                    ]},
+                    {"<>": "p","html": ""}
+                ];
+                
                 var transform = [
                     {"<>":"p","html":"Vaccines by Gender"},
                     {"<>": "style","html": "table,th,td {border: 1px solid black;border-collapse: collapse;}th {text-align: left;}"}, 
                     {"<>": "table","style": "width:100%","html": [
                         {"<>": "thead","html": [
                             {"<>": "tr","html": [
-                                {"<>": "th","id": "0","html": "Gender"}, 
-                                {"<>": "th","id": "1","html": "Total"},
                             ]
                         }, {
                             "<>": "tbody",

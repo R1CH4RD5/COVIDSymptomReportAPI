@@ -8,8 +8,7 @@ class connector {
     constructor(){
         this.dbo = null
         this.result = []
-        this.db = null
-        
+        this.db = null        
     }
 
     connect(){
@@ -19,8 +18,7 @@ class connector {
             MongoClient.connect(url, function(err, db) {            
                 if (err) reject(err);
                 self.db = db
-                self.dbo = db.db("covidreportapi");   
-                //console.log("dbo:", self.dbo)
+                self.dbo = db.db("covidreportapi"); 
                 resolve(self.dbo)            
             });
             this.dbo = self.dbo
@@ -29,7 +27,6 @@ class connector {
     }
 
     close(){
-        //console.log("db: ", this.db);
         this.db.close();
     }
 
@@ -80,7 +77,6 @@ class connector {
 
             let hourdata = this.randomIntFromInterval(1,24)
             let minutedata = this.randomIntFromInterval(1,60)
-            //const datedata = "\"" + yeardata + "-" + monthdata + "-" + daydata + "\""
             
 
             self.dbo.collection("data").insertOne({
@@ -165,7 +161,6 @@ class connector {
 
             self.dbo.collection("user").find({}).toArray(function(err, result) {
                 if (err) reject(err);
-                //console.log("result: ", result);
                 resolve(result);
             });
         })
@@ -181,7 +176,6 @@ class connector {
             
             self.dbo.collection("data").find({}).toArray(function(err, result) {
                 if (err) reject(err);
-                //console.log("result: ", result);
                 resolve(result);
             });
         })
@@ -193,7 +187,6 @@ class connector {
 
             self.dbo.collection("data").find({}).count(function(err, result) {
                 if (err) reject(err);
-                //console.log("result: ", result);
                 resolve(result);
             });
         })
@@ -202,16 +195,6 @@ class connector {
     getGenderCount(gender){
         var self = this
         return new Promise((resolve,reject)=>{ 
-
-            /*var query = [{
-                $group: { 
-                    _id : 1,
-                    Male: {$sum: {$cond: [{$eq:["$gender", "Male"]}, 1, 0]}},
-                    Female: {$sum: {$cond: [{$eq:["$gender", "Female"]}, 1, 0]}},
-                },
-            },{$project: {_id:0}}];*/
-
-            //console.log(gender)
 
             if (gender == "{gender}") {
                 resolve("No type of gender selected. Please select a gender.")
@@ -225,7 +208,6 @@ class connector {
     
                 self.dbo.collection("data").aggregate(query).toArray(function(err, result) {
                     if (err) reject(err);
-                    //console.log("result: ", result);
                     resolve(result);
                 });
             }
@@ -261,7 +243,6 @@ class connector {
 
             self.dbo.collection("data").aggregate(query).toArray(function(err, result) {
                 if (err) reject(err);
-                //console.log("result: ", result);
                 resolve(result);
             });
         })
@@ -283,7 +264,6 @@ class connector {
 
             self.dbo.collection("data").aggregate(query).toArray(function(err, result) {
                 if (err) reject(err);
-                //console.log("result: ", result);
                 resolve(result);
             });
         })
@@ -300,7 +280,6 @@ class connector {
 
             self.dbo.collection("data").find(query).count(function(err, result) {
                 if (err) reject(err);
-                //console.log("result: ", result);
                 resolve(result);
             });
         })
@@ -323,7 +302,6 @@ class connector {
 
             self.dbo.collection("data").aggregate(query).toArray(function(err, result) {
                 if (err) reject(err);
-                //console.log("result: ", result);
                 resolve(result);
             });            
         })
@@ -335,7 +313,7 @@ class connector {
 
             var query = 
             [{
-                $match: { // filter to limit to whatever is of importance
+                $match: {
                     "reportdate": {
                         $gte: new Date(2019, 0, 0),
                         $lte: new Date(new Date().getFullYear() + 1,0,0)
@@ -347,7 +325,7 @@ class connector {
                         "year": { $year: "$reportdate" },
                         "month": { $month: "$reportdate" },
                         "day": { $dayOfMonth: "$reportdate" }
-                    }, "count": { $sum: 1 }  // and sum up all documents per group
+                    }, "count": { $sum: 1 }
                 }
             },
             {"$sort":{"_id": -1}}
@@ -355,7 +333,6 @@ class connector {
 
             self.dbo.collection("data").aggregate(query).toArray(function(err, result) {
                 if (err) reject(err);
-                //console.log("result: ", result);
                 resolve(result);
             });
         })
@@ -364,35 +341,23 @@ class connector {
     CustomChronologicalReport(a,b,c,d){
         var self = this
         return new Promise((resolve,reject)=>{ 
-
-            // IT WORKS
-            //let dateString = "2020-08-01T23:00:00.000Z";
-            //let dateString2 = "2020-08-03T23:00:00.000Z";
-            
-            //var datestring = `${a}`+"-"+`${b}`+"-"+`${c}`+"T"+`${h1}`+":"+`${m1}`+":00.000Z"
-            //var datestring2 = `${d}`+"-"+`${e}`+"-"+`${f}`+"T"+`${h2}`+":"+`${m2}`+":00.000Z"
-
             
             var datestring  = a+"T"+b+":00.000Z"
             var datestring2 = c+"T"+d+":00.000Z"
 
-            //console.log(datestring)
-            //console.log(datestring2)
-
             if (new Date(datestring) < new Date(datestring2)) {
-                //console.log(datestring.toString() + "<" + datestring2.toString())
                 var query = 
             [{
-                $match: { // filter to limit to whatever is of importance
+                $match: {
                     "reportdate": {
                         $gte: new Date(datestring),
                         $lte: new Date(datestring2)
                     }
                 }
             }, {
-                $group: { // group by
+                $group: {
                     _id: {
-                        "year": { $year: "$reportdate" }, // and year
+                        "year": { $year: "$reportdate" },
                         "month": { $month: "$reportdate" },
                         "day": { $dayOfMonth: "$reportdate" },
                         "hour": { $hour: "$reportdate" },
@@ -405,7 +370,6 @@ class connector {
             
             self.dbo.collection("data").aggregate(query).toArray(function(err, result) {
                 if (err) reject(err);
-                //console.log("result: ", result);
                 resolve(result);
             });
             } else {
@@ -429,7 +393,7 @@ class connector {
                         "day": { $dayOfMonth: "$reportdate" }
                     },
                      
-                    "reinfected": { $sum: 1 }  // and sum up all documents per group
+                    "reinfected": { $sum: 1 }
                 }
             },
             {"$sort":{"_id": -1}}
@@ -437,7 +401,6 @@ class connector {
 
             self.dbo.collection("data").aggregate(query).toArray(function(err, result) {
                 if (err) reject(err);
-                //console.log("result: ", result);
                 resolve(result);
             });
         })
@@ -451,12 +414,10 @@ class connector {
 
             self.dbo.collection("data").find().count().then(function(result) {
                 nums = result;
-                //console.log(nums)
 
                 let sym = symptom.substring(0, 2);
 
                 var query = [
-                    /*{ $match : { s01 : true }},*/
                     { $group:
                         { _id: {result:  `$s${sym}`}, "count": { "$sum": 1 }},
                     },
@@ -469,12 +430,10 @@ class connector {
     
                 self.dbo.collection("data").aggregate(query).toArray(function(err, result) {
                     if (err) reject(err);
-                    //console.log("result: ", result);
                     resolve(result);
                 }); 
             })
         })
     }
-
 }
 module.exports = connector;
