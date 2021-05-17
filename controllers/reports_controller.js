@@ -482,7 +482,7 @@ exports.overview = function (req, res) {
                 res.write(html)
                 
             }).catch(err=>console.log("error: ", err))
-            
+
 
             // VacineGenderCount
             newconnection.getVacineGenderCount().then(result=>{
@@ -533,6 +533,4 @@ exports.overview = function (req, res) {
 
         }).catch(err=>console.log("error: ", err))
     }
-    
-    
 };

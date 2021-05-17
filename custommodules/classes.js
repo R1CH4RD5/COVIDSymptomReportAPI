@@ -12,7 +12,6 @@ class _Crypto
         this.password = Password;
         this.user = User;
         this.algorithm = 'aes-192-cbc';
-
     }
     get Hash()
     {
