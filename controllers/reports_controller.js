@@ -482,23 +482,7 @@ exports.overview = function (req, res) {
                 res.write(html)
                 
             }).catch(err=>console.log("error: ", err))
-/*
-
-            // ChronologicalCount
-            newconnection.getChronologicalCount().then(result=>{
-                //res.write("\n")
-                //res.write(JSON.stringify({ "---> Chronological Count": result }, null, 1));
-                //newconnection.close();
-                
-            }).catch(err=>console.log("error: ", err))
-
-            // ReinfectionCount
-            newconnection.getReinfectionCount().then(result=>{
-                //res.write("\n")
-                //res.write(JSON.stringify({ "---> Reinfection Count": result }, null, 1));
-                //newconnection.close();
-                
-            }).catch(err=>console.log("error: ", err))*/
+            
 
             // VacineGenderCount
             newconnection.getVacineGenderCount().then(result=>{

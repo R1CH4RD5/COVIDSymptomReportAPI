@@ -10,7 +10,6 @@ exports.addnewdata = function (req, res) {
         
         var promises = []
         const num = parseInt(req.params.num);
-        //const num = 50
         
         for (let i = 0; i < num; i++) {            
             promises.push(newconnection.addData());
