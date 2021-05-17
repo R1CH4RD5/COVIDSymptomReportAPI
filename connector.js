@@ -274,10 +274,10 @@ class connector {
             var query = [                                        
                 { "$group":{ 
                     _id : 1,
-                    "0 - 24": { $sum: {$cond: [{ $and: [{ $gte: [ "$age", 0 ] },{ $lte: [ "$age", 24 ] }]},1,0]}},
-                    "25 - 44": {$sum: {$cond: [{ $and: [{ $gte:  [ "$age", 25 ] },{ $lte: [ "$age", 44 ] }]},1,0]}},
-                    "45 - 64": {$sum: {$cond: [{ $and: [{ $gte:  [ "$age", 45 ] },{ $lte: [ "$age", 65 ] }]},1,0]}},
-                    "65 - 99": {$sum: {$cond: [{ $and: [{ $gte:  [ "$age", 65 ] },{ $lte: [ "$age", 100 ] }]},1,0]}}
+                    between00to24: { $sum: {$cond: [{ $and: [{ $gte: [ "$age", 0 ] },{ $lte: [ "$age", 24 ] }]},1,0]}},
+                    between25to44: {$sum: {$cond: [{ $and: [{ $gte:  [ "$age", 25 ] },{ $lte: [ "$age", 44 ] }]},1,0]}},
+                    between45to64: {$sum: {$cond: [{ $and: [{ $gte:  [ "$age", 45 ] },{ $lte: [ "$age", 65 ] }]},1,0]}},
+                    between65to99: {$sum: {$cond: [{ $and: [{ $gte:  [ "$age", 65 ] },{ $lte: [ "$age", 100 ] }]},1,0]}}
                 }}
             ,{$project: {_id:0}}];
 
@@ -313,11 +313,11 @@ class connector {
             var query = [{
                 $group: { 
                     _id : 1,
-                    "Not Vacinated": {$sum: {$cond: [{$eq:["$q3", "No"]}, 1, 0]}},
-                    "BioNTech, Pfizer": {$sum: {$cond: [{$eq:["$q3", "(Yes) BioNTech, Pfizer"]}, 1, 0]}},
-                    "Johnson & Johnson": {$sum: {$cond: [{$eq:["$q3", "(Yes) Johnson & Johnson"]}, 1, 0]}},
-                    "Moderna": {$sum: {$cond: [{$eq:["$q3", "(Yes) Moderna"]}, 1, 0]}},
-                    "Oxford, AstraZeneca": {$sum: {$cond: [{$eq:["$q3", "(Yes) Oxford, AstraZeneca"]}, 1, 0]}}
+                    NotVacinated: {$sum: {$cond: [{$eq:["$q3", "No"]}, 1, 0]}},
+                    BioNTechPfizer: {$sum: {$cond: [{$eq:["$q3", "(Yes) BioNTech, Pfizer"]}, 1, 0]}},
+                    JohnsonJohnson: {$sum: {$cond: [{$eq:["$q3", "(Yes) Johnson & Johnson"]}, 1, 0]}},
+                    Moderna: {$sum: {$cond: [{$eq:["$q3", "(Yes) Moderna"]}, 1, 0]}},
+                    OxfordAstraZeneca: {$sum: {$cond: [{$eq:["$q3", "(Yes) Oxford, AstraZeneca"]}, 1, 0]}}
                 },
             },{$project: {_id:0}}];
 

@@ -370,82 +370,183 @@ exports.overview = function (req, res) {
 
             // ReportsCount
             newconnection.getReportsCount().then(result=>{
-                //res.setHeader('Content-Type', 'application/json');
-                res.write(JSON.stringify({ "---> Total of Reports": result }, null, 1));
-                //newconnection.close();
+                
+                var data = {
+                    result
+                }
+                var transform2 = [
+                    {"<>": "tr","html": [
+                        {"<>": "td","html": ""}, 
+                        {"<>": "td","html": ""}, 
+                    ]
+                }];
+                var transform = [
+                    {"<>":"br","html":""},
+                    {"<>": "style","html": "table,th,td {border: 1px solid black;border-collapse: collapse;}th {text-align: left;}"}, 
+                    {"<>": "table","style": "width:100%","html": [
+                        {"<>": "thead","html": [
+                            {"<>": "tr","html": [
+                                {"<>": "th","id": "0","html": "Total of Reports"}, 
+                                {"<>": "th","id": "1","html": "${result}"},
+                            ]
+                        }, {
+                            "<>": "tbody",
+                            "id": "json-body",
+                            "html": function(obj) {
+                                return (json2html.transform(obj.result, transform2));
+                            }
+                        }, ]
+                    }, ]
+                }];
+                var html = json2html.transform(data, transform);
+
+                res.write(html)
                 
             }).catch(err=>console.log("error: ", err))
 
             // AgeRangeCount
             newconnection.getAgeRangeCount().then(result=>{
-                res.write("\n")
-                res.write(JSON.stringify({ "---> Age Range": result }, null, 1));
-                //newconnection.close();
+                
+                var data = {
+                    result
+                }
+                var transform2 = [
+                    {"<>":"p","html":"Age Range"},
+                    {"<>": "tr","html": [
+                        {"<>": "td","html": "${between00to24}"}, 
+                        {"<>": "td","html": "${between25to44}"}, 
+                        {"<>": "td","html": "${between45to64}"},
+                        {"<>": "td","html": "${between65to99}"},
+                    ]
+                }];
+                var transform = [
+                    {"<>": "style","html": "table,th,td {border: 1px solid black;border-collapse: collapse;}th {text-align: left;}"}, 
+                    {"<>": "table","style": "width:100%","html": [
+                        {"<>": "thead","html": [
+                            {"<>": "tr","html": [
+                                {"<>": "th","id": "0","html": "0 - 24"}, 
+                                {"<>": "th","id": "1","html": "25 - 44"},
+                                {"<>": "th","id": "2","html": "45 - 64"},
+                                {"<>": "th","id": "3","html": "65 - 99"},
+                            ]
+                        }, {
+                            "<>": "tbody",
+                            "id": "json-body",
+                            "html": function(obj) {
+                                return (json2html.transform(obj.result, transform2));
+                            }
+                        }, ]
+                    }, ]
+                }];
+                var html = json2html.transform(data, transform);
+
+                res.write(html)
                 
             }).catch(err=>console.log("error: ", err))
+
 
             // VacineCount
             newconnection.getVacineCount().then(result=>{
-                res.write("\n")
-                res.write(JSON.stringify({ "---> Vaccine Count": result }, null, 1));
-                //newconnection.close();
+
+                var data = {
+                    result
+                }
+                var transform2 = [
+                    {"<>":"p","html":"Vaccines"},
+                    {"<>": "tr","html": [
+                        {"<>": "td","html": "${NotVacinated}"}, 
+                        {"<>": "td","html": "${BioNTechPfizer}"}, 
+                        {"<>": "td","html": "${JohnsonJohnson}"},
+                        {"<>": "td","html": "${Moderna}"},
+                        {"<>": "td","html": "${OxfordAstraZeneca}"},
+                    ]
+                }];
+                var transform = [
+                    {"<>": "style","html": "table,th,td {border: 1px solid black;border-collapse: collapse;}th {text-align: left;}"}, 
+                    {"<>": "table","style": "width:100%","html": [
+                        {"<>": "thead","html": [
+                            {"<>": "tr","html": [
+                                {"<>": "th","id": "0","html": "NotVacinated"}, 
+                                {"<>": "th","id": "1","html": "BioNTechPfizer"},
+                                {"<>": "th","id": "2","html": "JohnsonJohnson"},
+                                {"<>": "th","id": "3","html": "Moderna"},
+                                {"<>": "th","id": "4","html": "OxfordAstraZeneca"},
+                            ]
+                        }, {
+                            "<>": "tbody",
+                            "id": "json-body",
+                            "html": function(obj) {
+                                return (json2html.transform(obj.result, transform2));
+                            }
+                        }, ]
+                    }, ]
+                }];
+                var html = json2html.transform(data, transform);
+
+                res.write(html)
                 
             }).catch(err=>console.log("error: ", err))
+/*
 
             // ChronologicalCount
             newconnection.getChronologicalCount().then(result=>{
-                res.write("\n")
-                res.write(JSON.stringify({ "---> Chronological Count": result }, null, 1));
+                //res.write("\n")
+                //res.write(JSON.stringify({ "---> Chronological Count": result }, null, 1));
                 //newconnection.close();
                 
             }).catch(err=>console.log("error: ", err))
 
             // ReinfectionCount
             newconnection.getReinfectionCount().then(result=>{
-                res.write("\n")
-                res.write(JSON.stringify({ "---> Reinfection Count": result }, null, 1));
-                //newconnection.close();
-                
-            }).catch(err=>console.log("error: ", err))
-
-            // VacineGenderCount
-            newconnection.getVacineGenderCount().then(result=>{
-                res.write("\n")
-                res.write(JSON.stringify({ result }, null, 1));
-                
-            }).catch(err=>console.log("error: ", err))
-
-
-            let symsA = ["01- Muscle tension and pain","02- Sore throat"]
-
-            for(let i = 0; i < 2; i++){
-                newconnection.SymptomRatio(symsA[i]).then(result=>{
-                    res.write("\n")
-                    res.write(JSON.stringify({ result }, null, 1));
-                    //newconnection.close();
-                    
-                }).catch(err=>console.log("error: ", err))
-            }
-            
-            /*let symptom = "01- Muscle tension and pain";
-            
-            newconnection.SymptomRatio(symptom).then(result=>{
-                res.write("\n")
-                res.write(JSON.stringify({ "---> 01- Muscle tension and pain": result }, null, 1));
+                //res.write("\n")
+                //res.write(JSON.stringify({ "---> Reinfection Count": result }, null, 1));
                 //newconnection.close();
                 
             }).catch(err=>console.log("error: ", err))*/
 
-            let symptom = "02- Sore throat";
-            
-            newconnection.SymptomRatio(symptom).then(result=>{
-                res.write("\n")
-                res.end(JSON.stringify({ "---> 02- Sore throat": result }, null, 1));
-                //newconnection.close();
+            // VacineGenderCount
+            newconnection.getVacineGenderCount().then(result=>{
+
+                var data = {
+                    result
+                }
+
+                //console.log(Object.keys(result[0].q3s),result[0].q3s)
+
+                var transform2 = [                    
+                    {"<>": "tr","html": [
+                        {"<>": "td","html": "${_id}"}, 
+                        {"<>": "td","html": "${count}"},
+                        //{"<>": "td","html": "${count}", 'obj':function(){return(this.q3s)}}
+                        //{"<>": "td","html": "${count}", 'obj':function(){return(this.q3s)}} 
+                    ]
+                }];
+                var transform = [
+                    {"<>":"p","html":"Vaccines by Gender"},
+                    {"<>": "style","html": "table,th,td {border: 1px solid black;border-collapse: collapse;}th {text-align: left;}"}, 
+                    {"<>": "table","style": "width:100%","html": [
+                        {"<>": "thead","html": [
+                            {"<>": "tr","html": [
+                                {"<>": "th","id": "0","html": "Gender"}, 
+                                {"<>": "th","id": "1","html": "Total"},
+                            ]
+                        }, {
+                            "<>": "tbody",
+                            "id": "json-body",
+                            "html": function(obj) {
+                                return (json2html.transform(obj.result, transform2));
+                            }
+                        }, ]
+                    }, ]
+                }];
+                var html = json2html.transform(data, transform);
+
+                res.end(html)
                 
             }).catch(err=>console.log("error: ", err))
-            
+
         }).catch(err=>console.log("error: ", err))
     }
+    
     
 };
