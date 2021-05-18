@@ -8,7 +8,6 @@ let rt_report = require("./routes/reports_route");
 var { graphqlHTTP } = require('express-graphql');
 const graphqlSchema = require("./graphql/schema")
 const graphqlResolvers = require("./graphql/resolvers")
-require('dotenv').config();
 
 // Server port
 var port = process.env.PORT || 1337;
