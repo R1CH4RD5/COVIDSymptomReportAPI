@@ -3,7 +3,6 @@ var MongoClient = require('mongodb').MongoClient;
 
 var url = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.dyilf.mongodb.net/${process.env.MONGO_DB}?retryWrites=true&w=majority`;
 
-console.log(url)
 
 class connector {
     constructor(){
@@ -19,7 +18,6 @@ class connector {
             MongoClient.connect(url, function(err, db) {            
                 if (err) reject(err);
                 self.db = db
-                console.log(db)
                 self.dbo = db.db("covidreportapi"); 
                 resolve(self.dbo)            
             });
