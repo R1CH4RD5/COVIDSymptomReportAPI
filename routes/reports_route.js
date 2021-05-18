@@ -245,16 +245,16 @@ router.route('/customchronologicalreport/:bdate/:btime/:edate/:etime').get(Contr
  *       properties:
  *         bdate:
  *           type: string
- *           description: Initial Year range.
+ *           description: Initial Date range.
  *         btime:
  *           type: string
- *           description: Initial Month range.
+ *           description: Initial Time range.
  *         edate:
  *           type: string
- *           description: Initial Day range.
+ *           description: Final Date range.
  *         etime:
  *           type: string
- *           description: Initial Hour range.
+ *           description: Final Time range.
  *         example:
  * 
  */
