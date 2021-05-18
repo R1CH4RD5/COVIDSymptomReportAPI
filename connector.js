@@ -18,6 +18,7 @@ class connector {
             MongoClient.connect(url, function(err, db) {            
                 if (err) reject(err);
                 self.db = db
+                console.log(db)
                 self.dbo = db.db("covidreportapi"); 
                 resolve(self.dbo)            
             });

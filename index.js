@@ -8,6 +8,7 @@ let rt_report = require("./routes/reports_route");
 var { graphqlHTTP } = require('express-graphql');
 const graphqlSchema = require("./graphql/schema")
 const graphqlResolvers = require("./graphql/resolvers")
+require('dotenv').config();
 
 // Server port
 var port = process.env.PORT || 1337;
@@ -55,12 +56,7 @@ const options = {
             "&nbsp&nbsp&nbsp&nbsp> <font face=\"courier\"color=\"blue\">[<b>string</b> q3]</font> Have you been vaccinated? If yes, with witch vaccine?<br>"
             
             
-        },
-        servers: [
-            {
-                url: "http://localhost:1337",
-            },
-        ],        
+        }      
     },
     apis: ["./routes/*.js"],
 };
