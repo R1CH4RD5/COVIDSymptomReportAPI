@@ -11,11 +11,6 @@ router.route('/getallreports').get(Controller.getallreports);
   * /covidreportapi/getallreports:
   *   get:
   *     summary: Retrieve all Reports items from DB and give a html code with the data.
-  *     description: 
-  *       You can visualize the html table on this [webpage](https://covidsymptomreportapi.herokuapp.com/covidreportapi/getallreports).<br />
-  *       ```
-  *       https://covidsymptomreportapi.herokuapp.com/covidreportapi/getallreports
-  *       ```
   *     tags: [Reports]
   *     responses:
   *       200:
@@ -384,7 +379,7 @@ router.route('/newreport/:name/:healthnum/:gender/:age/:contact/:email/:county/:
  * @swagger
  * components:
  *   schemas:
- *     NewReport:
+ *     GetAllReports:
  *       type: object
  *       required:
  *         - name
