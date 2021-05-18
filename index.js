@@ -97,6 +97,7 @@ app.get("/", (req, res) => {
             "</html>");
 });
 
+
 const uri = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.dyilf.mongodb.net/${process.env.MONGO_DB}?retryWrites=true&w=majority`
 const options2 = {useNewUrlParser: true, useUnifiedTopology: true}
 mongoose.connect(uri, options2)
