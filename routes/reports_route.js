@@ -12,9 +12,9 @@ router.route('/getallreports').get(Controller.getallreports);
   *   get:
   *     summary: Retrieve all Reports items from DB and give a html code with the data.
   *     description: 
-  *       You can visualize the html table on this [webpage](http://localhost:1337/covidreportapi/getallreports).<br />
+  *       You can visualize the html table on this [webpage](https://covidsymptomreportapi.herokuapp.com/covidreportapi/getallreports).<br />
   *       ```
-  *       http://localhost:1337/covidreportapi/getallreports
+  *       https://covidsymptomreportapi.herokuapp.com/covidreportapi/getallreports
   *       ```
   *     tags: [Reports]
   *     responses:
