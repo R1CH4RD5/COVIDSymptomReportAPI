@@ -74,6 +74,7 @@ app.use('/covidreportapi', rt_development)
 app.use('/covidreportapi', rt_report)
 app.use('/covidreportapi', swaggerUI.serve, swaggerUI.setup(specs))
 
+
 app.use(express.json());
 
   app.use('/graphql', graphqlHTTP({
@@ -81,6 +82,23 @@ app.use(express.json());
     rootValue:graphqlResolvers,
     graphiql: true
 }))
+
+app.get("/", (req, res) => {
+    res.send("<html>"+
+                "<head><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"></head>" +
+                "<body style=\"font-family: Arial;margin: 0;\">" +
+                    "<div style=\"height:25%;text-align:center;position:absolute;left:30%;top:20%\" class=\"content\">" +
+                        "<h1 style=\"text-align:center;padding:80px;padding-bottom:10px;padding-top:10px;text-align: center;background: #1abc9c;color: white;font-size: 50px;\"><p>COVIDSymptomReportAPI</p></h1>" +
+                        "<h2>Pick your preferred interface:</h2><br>" +
+                        "<p><a href=\"https://covidsymptomreportapi.azurewebsites.net/covidreportapi\"><img src=\"https://cavedweller92.files.wordpress.com/2019/07/swagger-logo-horizontal.png\" height=\"100\" class=\"image\"></a>" +
+                        "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + 
+                        "<a href=\"https://covidsymptomreportapi.azurewebsites.net/graphql\"><img src=\"https://www.pngitem.com/pimgs/m/385-3850895_graphql-logo-svg-hd-png-download.png\" height=\"100\" class=\"image\"></a></p>" +
+                        "<br><p>Created and developed by:</p>" +                        
+                        "<h3>José Costa (R1CH4RD5) & Dylan Pinto</h3>" +
+                    "</div>" +
+                "</body>" +
+            "</html>");
+});
 
 const uri = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.dyilf.mongodb.net/${process.env.MONGO_DB}?retryWrites=true&w=majority`
 const options2 = {useNewUrlParser: true, useUnifiedTopology: true}
